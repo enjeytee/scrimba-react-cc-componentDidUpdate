@@ -1,34 +1,134 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+/// FIRST LESSON componentDidUpdate() ///
 
-function App() {
-  const [count, setCount] = useState(0)
+import React from "react";
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+export default class App extends React.Component {
+  state = {
+    firstName: "", 
+    lastName: "", 
+    email: "", 
+    comments: "", 
+    isFriendly: true,
+    employment: "",
+    favColor: ""
+  }
 
-export default App
+  handleChange = (event) => {
+      const {name, value, type, checked} = event.target
+      type === "checkbox" ? 
+          this.setState({
+              [name]: checked
+          })
+      :
+      this.setState({
+          [name]: value
+      }) 
+  }
+
+  /**
+   * Goal: 
+   * 1. Whenever the state changes, save it in localStorage
+   * 2. When the form mounts, pre-populate the state if 
+   *    there's saved data in localStorage 
+   */
+
+  render() {
+      return (
+          <form>
+              <input
+                  type="text"
+                  placeholder="First Name"
+                  onChange={this.handleChange}
+                  name="firstName"
+                  value={this.state.firstName}
+              />
+              <input
+                  type="text"
+                  placeholder="Last Name"
+                  onChange={this.handleChange}
+                  name="lastName"
+                  value={this.state.lastName}
+              />
+              <input
+                  type="email"
+                  placeholder="Email"
+                  onChange={this.handleChange}
+                  name="email"
+                  value={this.state.email}
+              />
+              <textarea 
+                  value={this.state.comments}
+                  placeholder="Comments"
+                  onChange={this.handleChange}
+                  name="comments"
+              />
+              <input 
+                  type="checkbox" 
+                  id="isFriendly" 
+                  checked={this.state.isFriendly}
+                  onChange={this.handleChange}
+                  name="isFriendly"
+              />
+              <label htmlFor="isFriendly">Are you friendly?</label>
+              <br />
+              <br />
+              
+              <fieldset>
+                  <legend>Current employment status</legend>
+                  <input 
+                      type="radio"
+                      id="unemployed"
+                      name="employment"
+                      value="unemployed"
+                      checked={this.state.employment === "unemployed"}
+                      onChange={this.handleChange}
+                  />
+                  <label htmlFor="unemployed">Unemployed</label>
+                  <br />
+                  
+                  <input 
+                      type="radio"
+                      id="part-time"
+                      name="employment"
+                      value="part-time"
+                      checked={this.state.employment === "part-time"}
+                      onChange={this.handleChange}
+                  />
+                  <label htmlFor="part-time">Part-time</label>
+                  <br />
+                  
+                  <input 
+                      type="radio"
+                      id="full-time"
+                      name="employment"
+                      value="full-time"
+                      checked={this.state.employment === "full-time"}
+                      onChange={this.handleChange}
+                  />
+                  <label htmlFor="full-time">Full-time</label>
+                  <br />
+              </fieldset>
+              <br />
+              
+              <label className="favColor" htmlFor="favColor">What is your favorite color?</label>
+              <br />
+              <select 
+                  id="favColor" 
+                  value={this.state.favColor}
+                  onChange={this.handleChange}
+                  name="favColor"
+              >
+                  <option value="red">Red</option>
+                  <option value="orange">Orange</option>
+                  <option value="yellow">Yellow</option>
+                  <option value="green">Green</option>
+                  <option value="blue">Blue</option>
+                  <option value="indigo">Indigo</option>
+                  <option value="violet">Violet</option>
+              </select>
+          </form>
+      )
+  }
+};
+
+/// FIRST LESSON componentDidUpdate() ///
